@@ -1,9 +1,9 @@
 @font-face {
   font-family: "toutiao"; /* Project id 3670069 */
-  src: url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.woff2?t=1664350909593') format('woff2'),
-       url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.woff?t=1664350909593') format('woff'),
-       url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.ttf?t=1664350909593') format('truetype'),
-       url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.svg?t=1664350909593#toutiao') format('svg');
+  src: url('iconfont.woff2?t=1664351005726') format('woff2'),
+       url('iconfont.woff?t=1664351005726') format('woff'),
+       url('iconfont.ttf?t=1664351005726') format('truetype'),
+       url('iconfont.svg?t=1664351005726#toutiao') format('svg');
 }
 
 .toutiao {
@@ -97,3 +97,4 @@
 .toutiao-dianzan:before {
   content: "\e615";
 }
+

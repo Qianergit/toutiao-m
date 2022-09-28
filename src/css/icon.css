@@ -1,8 +1,7 @@
 @font-face {
   font-family: "toutiao";
   /* Project id 3670069 */
-  /* Color fonts */
-  src: url('//at.alicdn.com/t/c/font_3670069_rwsxw5uqca.woff2?t=1664023002931') format('woff2'), url('//at.alicdn.com/t/c/font_3670069_rwsxw5uqca.woff?t=1664023002931') format('woff'), url('//at.alicdn.com/t/c/font_3670069_rwsxw5uqca.ttf?t=1664023002931') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.woff2?t=1664350909593') format('woff2'), url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.woff?t=1664350909593') format('woff'), url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.ttf?t=1664350909593') format('truetype'), url('//at.alicdn.com/t/c/font_3670069_nwz7chfmb4.svg?t=1664350909593#toutiao') format('svg');
 }
 .toutiao {
   font-family: "toutiao" !important;

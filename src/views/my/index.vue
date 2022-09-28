@@ -8,10 +8,10 @@
         fit="cover"
         round
        class="avatar"
-        src="https://img01.yzcdn.cn/vant/cat.jpeg"
+        :src="userInfo.photo"
         />
        
-        <span class="user-name">千千儿的号</span>
+        <span class="user-name">千千儿</span>
       </div>
       <div user-right>
         <van-button size='mini' round>编辑资料</van-button>
@@ -19,20 +19,20 @@
     </div>
     <div class="data-stats">
       <div class="data-item">
-        <span class="count">10</span>
+        <span class="count">{{userInfo.art_count}}</span>
         <span class="text">头条</span>
       </div>
         <div class="data-item">
-        <span class="count">10</span>
-        <span class="text">头条</span>
+        <span class="count">{{userInfo.follow_count}}</span>
+        <span class="text">关注</span>
       </div>
         <div class="data-item">
-        <span class="count">10</span>
-        <span class="text">头条</span>
+        <span class="count">{{userInfo.fans_count}}</span>
+        <span class="text">粉丝</span>
       </div>
         <div class="data-item">
-        <span class="count">10</span>
-        <span class="text">头条</span>
+        <span class="count">{{userInfo.like_count}}</span>
+        <span class="text">获赞</span>
       </div>
     </div>
    </div>
@@ -58,20 +58,62 @@
 
   <van-cell title="消息通知" is-link />
   <van-cell title="小志同学"  class="xiaozhitongxue" is-link/> 
-<van-cell title="退出登录" class="logout-cell" v-if="user" /> 
+<van-cell title="退出登录" 
+class="logout-cell" 
+v-if="user" 
+clickable
+@click="onLogout"
+/> 
   </div>
 </template>
 
 <script>
+import {loadUserInfoAPI} from '@/Api'
 import{mapState} from 'vuex'
 export default {
 name:'myIndex',
+data(){
+  return{
+ userInfo:{}
+  }
+},
 methods:{
+ onLogout(){
+  console.log('aaaa')
+  this.$dialog.confirm({
+  message: '您确认退出么',
+})
+  .then(() => {
+    this.$store.commit('setUser',null)
+    // on confirm
+  })
+  .catch(() => {
+    // on cancel
+  });
+ 
+ },
+ async getUserInfo(){
+  try{
+     const {data} = await loadUserInfoAPI()
+    console.log(data)
+     this.userInfo=data.data
+  }catch(err){
+    console.log(err)
+    this.$toast('请求失败')
+    
+  }
 
+ }
 },
 computed:{
     ...mapState(['user'])
+},
+created(){
+  if(this.user){
+  this.getUserInfo()
+  }
 }
+
 }
 
 </script>
@@ -139,7 +181,7 @@ computed:{
       flex-direction: column;
       flex: 1;
       .count{
-font-size: 36px;
+font-size: 28px;
  color: #fff;
       }
       .text{

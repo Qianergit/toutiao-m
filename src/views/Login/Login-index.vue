@@ -128,6 +128,7 @@ methods:{
    
    this.$store.commit('setUser',data.data)
    this.$toast.success('登陆成功')
+   this.$router.back()
    console.log(data)
    }catch(err){
     if(err.response.status===400){

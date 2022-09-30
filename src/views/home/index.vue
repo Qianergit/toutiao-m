@@ -1,14 +1,150 @@
 <template>
   <div class="home-container">
-    这里是Home</div>
+   <van-nav-bar class="page-nav-bar" fixed>
+    <van-button
+    class="page-search"
+    slot="title"
+    size="small"
+    icon="search"
+    round
+    >
+      搜索
+    </van-button>
+   </van-nav-bar>
+   <!-- 滑动标签部分 -->
+  <van-tabs v-model="active" animated swipeable class="channel-tabs">
+  <van-tab :title=obj.name
+   v-for="obj in channelList" 
+   :key="obj.id">
+   <article-list :channels='obj'/>
+   </van-tab>
+ 
+  <div class="placeholder" slot="nav-right"></div>
+  <!-- 汉堡按钮 -->
+  <div slot="nav-right" class="hanberge_btn"> 
+    <i slot="icon" class="toutiao toutiao-gengduo"></i>
+  </div>
+  </van-tabs>
+
+
+   </div>
+
 </template>
 
-<script>
+<script >
+ import {getUserChannelsAPI} from '@/Api'
+ import ArticleList from './components/article-list'
 export default {
-name:'HomeIndex'
+ 
+name:'HomeIndex',
+data(){
+  return{
+  active:0,
+  channelList:[]
+  }
+},
+components:{
+ArticleList
+},
+created(){
+  this.getChannel()
+},
+methods:{
+  async getChannel(){
+    try{
+    const {data}= await getUserChannelsAPI()
+    this.channelList=data.data.channels
+    console.log(data)
+    }catch(err){
+      this.$toast('获取用户频道失败')
+    }
+  }
+}
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+ .home-container{
+  padding-top:174px ;
+  padding-bottom: 100px;
+  /deep/ .page-nav-bar{
+    .van-nav-bar__title{
+      max-width: unset;
+    }
+     background-color:  #3296fa;
+    .page-search{
+    width: 555px;
+    height: 64px;
+    background-color:#5babfb;
+    border: none;
+    font-size: 28px;
+    color: #fff;
+    .van-icon{
+      font-size: 40px;
+    }
+    }
+  }
+  /deep/ .channel-tabs{
+     .van-tabs__wrap{
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 92px;
+      z-index: 1;
+      height:82px;
+      
+    }
+    .van-tab{
+        border-right: 1px solid #edeff3;
+        min-width: 200px;
+       font-size: 28px;
+       color: #777;
+       }
+       .van-tab--active{
+        font-size: 30px;
+        color: #333333;
+       }
+       .van-tabs__nav--line{
+        padding-bottom: 0;
+       }
+    .van-tabs__line{
+      bottom: 8px;
+      width: 31px;
+	    height: 6px;
+	    background-color: #3296fa;
+      border-radius: 3px;
+    }
+      .placeholder{
+       width:66px ;
+       height: 82px;
+       flex-shrink:0;
+    }
+     .hanberge_btn{
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      right: 0;
+      width:66px ;
+      height: 82px;
+      background-color: #ffffff;
+	    opacity: 0.9;
+    i.toutiao{
+      font-size: 33px;
+    }
+    &:before{
+      content: "";
+      position:absolute;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      background-image: url(~@/assets/gradient-gray-line.png);
+      background-size: contain;
+    }
+  
+  }
+  }
+ 
+}
 
 </style>

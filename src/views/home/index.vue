@@ -21,11 +21,25 @@
  
   <div class="placeholder" slot="nav-right"></div>
   <!-- 汉堡按钮 -->
-  <div slot="nav-right" class="hanberge_btn"> 
+  <div slot="nav-right" class="hanberge_btn" @click="isChannelsshow=true"> 
     <i slot="icon" class="toutiao toutiao-gengduo"></i>
   </div>
   </van-tabs>
+  <!-- 弹出层 -->
+<van-popup
+  v-model="isChannelsshow"
+  closeable
+  position="bottom"
+   close-icon-position="top-left"
+  :style="{ height: '100%' }"
+ 
+>
+<channel-edit :mychannel="channelList" 
+:active=active 
+ @upDateactive="Changeactive">
 
+</channel-edit>
+</van-popup>
 
    </div>
 
@@ -34,30 +48,54 @@
 <script >
  import {getUserChannelsAPI} from '@/Api'
  import ArticleList from './components/article-list'
+ import channelEdit from './components/channel-edit.vue'
+ import {mapState} from 'vuex'
+ import {getItem} from '@/utils/storage'
 export default {
  
 name:'HomeIndex',
 data(){
   return{
   active:0,
-  channelList:[]
+  channelList:[],
+  isChannelsshow:false
   }
 },
 components:{
+  channelEdit,
 ArticleList
+},
+computed:{
+  ...mapState(['user'])
 },
 created(){
   this.getChannel()
 },
 methods:{
   async getChannel(){
+    let channel =[]
     try{
-    const {data}= await getUserChannelsAPI()
-    this.channelList=data.data.channels
-    console.log(data)
+      if(this.user){
+       const {data}= await getUserChannelsAPI()
+       channel=data.data.channels
+      }else{
+        const localstoragelist=getItem('TOUTIAO_CHANNEL')
+        if(localstoragelist){
+          channel=localstoragelist
+        }else{
+           const {data}= await getUserChannelsAPI()
+           channel=data.data.channels
+        }
+      }
+    this.channelList=channel
     }catch(err){
       this.$toast('获取用户频道失败')
     }
+  },
+  Changeactive(index,unshow){
+    console.log('aaa')
+    this.active=index
+    this.isChannelsshow=unshow
   }
 }
 }

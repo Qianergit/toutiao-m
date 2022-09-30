@@ -78,7 +78,7 @@ props:{},
 data(){
   return{
        user: {
-        mobile:'13911111111', // 手机号
+        mobile:'15641763266', // 手机号
         code:'246810' // 验证码
       },
      userFormRules:{

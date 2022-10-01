@@ -6,6 +6,8 @@
     slot="title"
     size="small"
     icon="search"
+    
+    to="/search"
     round
     >
       搜索

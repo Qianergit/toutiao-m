@@ -12,7 +12,14 @@ const routes = [{
 
     },
     {
+        path: '/search',
+        name: 'search',
+        component: () =>
+            import ('@/views/search')
+    },
+    {
         path: '/',
+        redirect: '/home',
         component: () =>
             import ('@/views/Layout'),
 
@@ -42,7 +49,7 @@ const routes = [{
             }
         ]
 
-    }
+    },
 
 ]
 

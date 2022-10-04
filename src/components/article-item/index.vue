@@ -2,7 +2,9 @@
   
  
   <van-cell  
-   class="article-item">
+   class="article-item"
+    :to="'/articlebug/' + article.art_id"
+  >
       <div slot='title' class="title van-multi-ellipsis--l2">{{article.title}}</div>
       <div slot='label'>
        <div  v-if="article.cover.type === 3" class="item-warp">
@@ -28,10 +30,10 @@
       v-if="article.cover.type === 1"
       slot="default" 
       fit="cover"
-      
       :src="article.cover.images[0]"
 />
     </van-cell>
+   
 </template>
 
 <script>
@@ -43,7 +45,16 @@ props:{
         required:true
     }
 },
-
+data(){
+    return{
+       
+           
+        
+    }
+},
+methods:{
+   
+}
 }
 </script>
 

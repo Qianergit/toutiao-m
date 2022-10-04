@@ -22,7 +22,7 @@
 <ArticleItem
 v-for="(article,index) in list" 
 :key="index"
-:article=article
+:article=article  
 ></ArticleItem>
   <!-- <van-cell v-for="(item,index) in list" 
   :key="index"

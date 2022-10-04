@@ -12,6 +12,14 @@ const routes = [{
 
     },
     {
+        path: '/articlebug/:articleid',
+        name: 'articlebug',
+        component: () =>
+            import ('@/views/articlebug/articleindex.vue'),
+        props: true
+
+    },
+    {
         path: '/search',
         name: 'search',
         component: () =>
@@ -47,7 +55,7 @@ const routes = [{
                 component: () =>
                     import ('@/views/my')
             }
-        ]
+        ],
 
     },
 

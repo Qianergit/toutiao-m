@@ -19,8 +19,22 @@ export const addUserChannel = channel => {
     })
 }
 export const deleteUserChannel = channelID => {
+        return request({
+            url: `/v1_0/user/channels/${channelID}`,
+            method: 'delete'
+        })
+    }
+    //获取文章详情的接口
+export const getarticlesmain = id => {
     return request({
-        url: `/v1_0/user/channels/${channelID}`,
-        method: 'delete'
+        url: `/v1_0/articles/${id}`,
+        method: 'get'
+    })
+}
+export const getcomments = (params) => {
+    return request({
+        url: '/v1_0/comments',
+        method: 'get',
+        params
     })
 }

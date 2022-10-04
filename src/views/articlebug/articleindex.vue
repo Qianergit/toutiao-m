@@ -79,7 +79,7 @@
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
      </div>
-     <div class="article-bottom" v-if="articles">
+     <div class="article-bottom" v-if="articles.art_id">
       <van-button
         class="comment-btn"
         type="default"
@@ -99,11 +99,13 @@
       class="btn-item"
       :acrticleId="articles.art_id"
       v-model="articles.is_collected"
+     
       />
      <!-- //点赞是生效的 -->
       <LikeArticle 
       v-model="articles.attitude"
       :acrticleId=articles.art_id
+     
       />
      
       <van-icon name="share" color="#777777"></van-icon>

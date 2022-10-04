@@ -64,6 +64,15 @@ export default {
         } 
         this.loading=false
     }
+  },
+  created(){
+    console.log(this.value)
+  },
+  mounted(){
+    console.log('222',this.value)
+  },
+  updated () {
+    console.log('333',this.value)
   }
 }
 </script>

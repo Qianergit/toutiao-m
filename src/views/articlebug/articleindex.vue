@@ -55,10 +55,13 @@
         ref="article-content"
         ></div>
         <van-divider>正文结束</van-divider>
+
         <!-- 这个部分是评论区 -->
          <comment-list
          :source="articles.art_id"
           @totalComment="totalCommentCount=$event.total_count"
+          :list="commentpushlists"
+          @reply-click="replyclick"
            />
            <!-- 底部区域 -->
       </div>
@@ -85,7 +88,7 @@
         type="default"
         round
         size="small"
-        @click="popupshow='show'"
+        @click="popupshows()"
       >写评论</van-button>
       
       <van-icon
@@ -94,14 +97,14 @@
         color="#777"
         
       />
-      <!-- 收藏不生效 -->
+      <!-- 收藏 -->
       <collect-article
       class="btn-item"
       :acrticleId="articles.art_id"
       v-model="articles.is_collected"
      
       />
-     <!-- //点赞是生效的 -->
+     <!-- //点赞 -->
       <LikeArticle 
       v-model="articles.attitude"
       :acrticleId=articles.art_id
@@ -110,23 +113,36 @@
      
       <van-icon name="share" color="#777777"></van-icon>
       
-      <van-popup
-       v-model="popupshow"
-       position="bottom"
-       :style="{ height: '30%' }"
-       >
-       <comment-post 
-       :target="articles.art_id"
-       />
-      </van-popup>
+      
     </div>
       <!-- /加载完成-文章详情 -->
       
 
  
     <!-- /底部区域 -->
-   
+    <!-- 评论框组件 -->
     
+   <van-popup
+      v-model="popupshow"
+       position="bottom"
+       >
+       <comment-post 
+       :target="articles.art_id"
+       @commentnewlist="commentpushlist"
+       />
+      </van-popup>
+   <!-- 评论回复弹窗 -->
+   <van-popup
+   v-if="isreplyshow"
+      v-model="isreplyshow"
+       position="bottom"
+       :style="{ height: '100%' }"
+       >
+       <comment-reply
+       :comment="currentcomment"
+       @close="isreplyshow = false"
+       ></comment-reply>
+      </van-popup>
   </div>
 </template>
 
@@ -137,7 +153,8 @@ import { ImagePreview } from 'vant';
 import CollectArticle from '@/components/collect-article.vue'
 import LikeArticle from '@/components/like-article.vue';
 import CommentList from '@/components/comment-list.vue';
-import CommentPost from '@/components/commontpost.vue'
+import CommentPost from '@/components/commentpost.vue'
+import CommentReply from './components/commentreply.vue'
 
 // ImagePreview([
 //   'https://img01.yzcdn.cn/vant/apple-1.jpg',
@@ -151,6 +168,12 @@ export default {
     LikeArticle,
     CommentList,
     CommentPost,
+    CommentReply,
+  },
+  provide:function() {
+    return {
+      articleID:this.articleid
+    }
   },
   props: {
       articleid: {
@@ -163,9 +186,12 @@ export default {
       articles:{},
       loadings:true,
       errStatus:0,
-       followLoading:false,
-       totalCommentCount:0,
-       popupshow: false,
+      followLoading:false,
+      totalCommentCount:0,
+      popupshow:false,
+      commentpushlists:[],
+      isreplyshow:false,
+      currentcomment:{} //这个是传到评论的评论的数据
     }
   },
   computed: {},
@@ -211,7 +237,17 @@ export default {
       }
     })
   },
-  
+  popupshows(){
+    this.popupshow=!this.popupshow
+  },
+  commentpushlist(data){
+      this.commentpushlists.unshift(data.new_obj)
+      this.popupshows()
+  },
+  replyclick(data){
+    this.isreplyshow=true
+    this.currentcomment=data
+  }
   },
  
 }

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <van-cell class="comment-item">
+  <!-- <van-cell class="comment-item">
     <van-image
       slot="icon"
       class="avatar"
@@ -26,7 +26,7 @@
         >回复 0</van-button>
       </div>
     </div>
-  </van-cell>
+  </van-cell> -->
    <van-cell class="comment-item">
     <van-image
       slot="icon"
@@ -49,13 +49,15 @@
     </div>
 
     <div slot="label">
-      <p class="comment-content">{{comment.content}}</p>
+      <!-- 这里是评论内容 -->
+      <p class="comment-content" v-html="this.comment.content"></p> 
       <div class="bottom-info">
         <span class="comment-pubdate">{{comment.pubdate | relativeTime}}</span>
         <van-button
+        @click="$emit('reply-click',comment)"
           class="reply-btn"
           round
-        >{{comment.reply_count}}</van-button>
+        >回复{{comment.reply_count}}</van-button>
       </div>
     </div>
   </van-cell>
@@ -73,15 +75,16 @@ export default {
     comment:{
         type:Object,
         required:true
-    }
+    },
+    
   },
   data () {
     return {
-      
+      message:this.comment.content,
        commentLoading:false
     }
   },
-  computed: {},
+ 
   watch: {},
   created () {},
   mounted () {
